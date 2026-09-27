@@ -1,0 +1,32 @@
+======================================================================
+HACKJUDGE - DOGFOOD 2026 ACCEPTANCE TEST REPORT
+Execution Date/Time: 2026-09-27T16:34:07.893624+00:00
+Platform: HackJudge (Open, Self-Hosted Hackathon Management & Judging)
+======================================================================
+TEST 1: Create event -> PASS (Event ID: 7804983b-2216-4393-b427-dbc1a1db5e46)
+TEST 2: Register participant -> PASS
+TEST 3: Create team -> PASS (Team ID: 58b81024-acb5-45e2-81ae-9391ee59c0b5)
+TEST 4: Submit project -> PASS (Submission finalized & timestamped)
+TEST 5: Assign judge -> PASS (Assigned to Judge: judge)
+TEST 6: Verify judge can access assigned project -> PASS
+TEST 7: Verify judge cannot access unassigned project -> PASS (Access correctly rejected 404/403)
+TEST 8: Submit evaluation -> PASS (Weighted Score: 91.0/100, Finalized & Locked)
+TEST 9: Run normalization -> PASS (Z-score algorithm executed across judges)
+TEST 10: Verify ranking -> PASS (Raw vs. Normalized rank comparison verified)
+TEST 11: Vote -> PASS (Community vote recorded in database)
+TEST 12: Prevent duplicate vote -> PASS (Duplicate vote rejected with HTTP 400)
+TEST 13: Export CSV -> PASS (Streaming CSV export with normalized metrics)
+TEST 14: Verify certificate -> PASS (Cryptographic verification & escaped SVG/HTML OK)
+TEST 15: Verify role isolation -> PASS (Backend RBAC strictly enforced across roles)
+TEST 16: Verify deadline enforcement -> PASS (Post-deadline submission strictly rejected)
+
+======================================================================
+DOGFOOD 2026 SPECIFICATION TIER COMPLIANCE
+======================================================================
+Tier 1 (Core Platform & Submissions)       : PASS
+Tier 2 (Judging Engine & Normalization)     : PASS
+Tier 3 (Community Voting & Anti-Abuse)      : PASS
+Tier 4 (Verifiable Certificates & REST API) : PASS
+======================================================================
+OVERALL STATUS: PASS
+======================================================================
