@@ -1,18 +1,32 @@
-# HackJudge: Open, Self-Hosted Hackathon Management & Judging
+# 🏆 HackJudge: Open, Self-Hosted Hackathon Management & Judging
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Python 3.11+](https://img.shields.io/badge/Python-3.11+-brightgreen.svg)]()
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.110+-teal.svg)]()
-[![React 19](https://img.shields.io/badge/React-19-blue.svg)]()
-[![Docker Ready](https://img.shields.io/badge/Docker-Compose-2496ED.svg)]()
-[![Offline Capable](https://img.shields.io/badge/Network-100%25%20Offline-success.svg)]()
-[![Acceptance Tests](https://img.shields.io/badge/Acceptance%20Suite-16%2F16%20PASS-success.svg)]()
+![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
+![Python 3.11+](https://img.shields.io/badge/Python-3.11+-brightgreen.svg)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.110+-teal.svg)
+![React 19](https://img.shields.io/badge/React-19-blue.svg)
+![Docker Ready](https://img.shields.io/badge/Docker-Compose-2496ED.svg)
+![Offline Capable](https://img.shields.io/badge/Network-100%25%20Offline-success.svg)
+![Acceptance Tests](https://img.shields.io/badge/Acceptance%20Suite-16%2F16%20PASS-success.svg)
 
 > A production-quality, open-source, self-hosted hackathon management and judging platform engineered to meet and exceed the **Dogfood 2026 Hackathon Specification**.
 
 ---
 
-## 1. Product Identity & Design
+## 📑 Table of Contents
+
+1. [Product Identity & Design](#1--product-identity--design)
+2. [Information & Route Architecture](#2-️-information--route-architecture)
+3. [Core Capabilities & Mathematical Rigor](#3-️-core-capabilities--mathematical-rigor)
+4. [Quick Start with Docker Compose](#4--quick-start-with-docker-compose)
+5. [Seeded Test Credentials](#5--seeded-test-credentials)
+6. [Local Standalone Setup (Without Docker)](#6--local-standalone-setup-without-docker)
+7. [Automated Acceptance Suite & Verification](#7--automated-acceptance-suite--verification)
+8. [Troubleshooting](#8-️-troubleshooting)
+9. [License](#9--license)
+
+---
+
+## 1. 🎨 Product Identity & Design
 
 **HackJudge** is an offline-capable, high-integrity hackathon platform designed for university, enterprise, and decentralized developer events.
 
@@ -23,9 +37,12 @@
 
 ---
 
-## 2. Information & Route Architecture
+## 2. 🗂️ Information & Route Architecture
 
-```
+<details>
+<summary>Click to view full route architecture tree</summary>
+
+```text
 PUBLIC SURFACE
   ├── / (Landing Page: Hero, Value Props, Flow, Role Features, Self-Hosting Specs)
   ├── /events (Public Event Directory)
@@ -85,10 +102,11 @@ ROLE-SPECIFIC PORTALS (Persistent Sidebars & Strict Backend RBAC)
         ├── /admin/audit (Full Platform Security Audit Trail)
         └── /admin/settings (Global Instance Configuration)
 ```
+</details>
 
 ---
 
-## 3. Core Capabilities & Mathematical Rigor
+## 3. ⚙️ Core Capabilities & Mathematical Rigor
 
 1. **Role-Isolated Portals**: Strict backend authorization enforcement for Participants, Judges, Organizers, and Admins. Judges cannot view or score unassigned projects. Participants cannot tamper with projects after deadlines.
 2. **Weighted Rubric Scoring**: Custom multi-criteria rubrics with automated weight validation ($\sum w = 100\%$).
@@ -103,16 +121,16 @@ ROLE-SPECIFIC PORTALS (Persistent Sidebars & Strict Backend RBAC)
 
 ---
 
-## 4. Quick Start with Docker Compose
+## 4. 🐳 Quick Start with Docker Compose
 
 The complete platform (PostgreSQL, Backend API, and Frontend Nginx) initializes with a single command:
 
 ```bash
-docker compose up
+docker compose up -d
 ```
 
-### Local URLs:
-* **Frontend Web Application**: [http://localhost:5173](http://localhost:5173) (or [http://localhost:80](http://localhost:80))
+### 🌐 Local URLs:
+* **Frontend Web Application**: [http://localhost:5173](http://localhost:5173) (or `http://localhost:80`)
 * **Backend REST API**: [http://localhost:8000/api](http://localhost:8000/api)
 * **Interactive Swagger Documentation**: [http://localhost:8000/docs](http://localhost:8000/docs)
 * **ReDoc API Documentation**: [http://localhost:8000/redoc](http://localhost:8000/redoc)
@@ -120,9 +138,9 @@ docker compose up
 
 ---
 
-## 5. Seeded Test Credentials
+## 5. 🔑 Seeded Test Credentials
 
-The database automatically initializes with realistic fixtures for testing and evaluation:
+The database automatically initializes with realistic fixtures for testing and evaluation. Here are the default accounts:
 
 | Role | Username | Email | Password | Primary Portal |
 | :--- | :--- | :--- | :--- | :--- |
@@ -131,12 +149,12 @@ The database automatically initializes with realistic fixtures for testing and e
 | **Judge** | `judge` | `judge@hackathon.local` | `JudgePassword123!` | `/judge/dashboard` |
 | **Participant** | `participant` | `participant@hackathon.local` | `ParticipantPassword123!` | `/participant/dashboard` |
 
-*Additional Seeded Judges*: `judge_elena`, `judge_kenji` (Password: `JudgePassword123!`).  
-*Additional Seeded Participants*: `dev_priya`, `dev_liam`, `dev_amara`, `dev_carlos`, `dev_sophie`, `dev_yuki` (Password: `ParticipantPassword123!`).
+> *Additional Seeded Judges*: `judge_elena`, `judge_kenji` (Password: `JudgePassword123!`).  
+> *Additional Seeded Participants*: `dev_priya`, `dev_liam`, `dev_amara`, `dev_carlos`, `dev_sophie`, `dev_yuki` (Password: `ParticipantPassword123!`).
 
 ---
 
-## 6. Local Standalone Setup (Without Docker)
+## 6. 💻 Local Standalone Setup (Without Docker)
 
 You can also run both the backend and frontend directly on your local workstation using Python and Node.js.
 
@@ -162,7 +180,7 @@ npm run dev
 
 ---
 
-## 7. Automated Acceptance Suite & Verification
+## 7. ✅ Automated Acceptance Suite & Verification
 
 The repository includes a comprehensive 16-test acceptance suite that validates every end-to-end workflow, security boundary, and tier specification requirement:
 
@@ -196,6 +214,15 @@ python -m pytest -v
 
 ---
 
-## 8. License
+## 8. 🛠️ Troubleshooting
+
+- **Backend crashing with `ModuleNotFoundError: No module named 'psycopg'`**: 
+  Make sure your `DATABASE_URL` uses the correct SQLAlchemy dialect for your installed PostgreSQL driver. For `psycopg2-binary`, ensure the connection string is `postgresql+psycopg2://` instead of just `postgresql://`.
+- **Port Conflicts on `8000` or `5173`**:
+  If the Docker containers fail to map ports, confirm no other local services are running on port 8000 (Backend API) or 5173 (Frontend).
+
+---
+
+## 9. 📄 License
 
 HackJudge is open-source software licensed under the [MIT License](LICENSE).

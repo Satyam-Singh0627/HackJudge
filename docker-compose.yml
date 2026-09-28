@@ -25,7 +25,7 @@ services:
     container_name: hackathon_backend
     restart: always
     environment:
-      DATABASE_URL: postgresql://hackathon_user:hackathon_pass@database:5432/hackathon_db
+      DATABASE_URL: postgresql+psycopg2://hackathon_user:hackathon_pass@database:5432/hackathon_db
       SECRET_KEY: production-hackathon-2026-secret-key-super-secure
       ALGORITHM: HS256
       ACCESS_TOKEN_EXPIRE_MINUTES: 1440
