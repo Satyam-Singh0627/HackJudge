@@ -34,7 +34,25 @@ class PrizeOut(PrizeBase):
     class Config:
         from_attributes = True
 
+class AnnouncementBase(BaseModel):
+    title: str
+    content: str
+    is_pinned: bool = False
+
+class AnnouncementCreate(AnnouncementBase):
+    pass
+
+class AnnouncementOut(AnnouncementBase):
+    id: str
+    event_id: str
+    created_by_id: str
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
 class EventBase(BaseModel):
+
     title: str
     slug: str
     description: str
@@ -84,6 +102,7 @@ class EventOut(EventBase):
     status: str
     tracks: List[TrackOut] = []
     prizes: List[PrizeOut] = []
+    announcements: List[AnnouncementOut] = []
 
     class Config:
         from_attributes = True

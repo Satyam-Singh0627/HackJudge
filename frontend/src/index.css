@@ -419,3 +419,25 @@ table.data-table tr:hover td {
   color: var(--text-muted);
   margin-top: 4px;
 }
+
+/* Print Styles */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .certificate-print-area, .certificate-print-area * {
+    visibility: visible;
+  }
+  .certificate-print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    border: 4px double #b45309 !important;
+    background: #ffffff !important;
+    padding: 40px !important;
+    margin: 0;
+    box-shadow: none !important;
+  }
+}
+

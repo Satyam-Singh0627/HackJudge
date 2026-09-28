@@ -48,6 +48,7 @@ class Event(Base):
     prizes = relationship("Prize", back_populates="event", cascade="all, delete-orphan")
     teams = relationship("Team", back_populates="event", cascade="all, delete-orphan")
     registrations = relationship("EventRegistration", back_populates="event", cascade="all, delete-orphan")
+    announcements = relationship("Announcement", back_populates="event", cascade="all, delete-orphan")
 
     def get_derived_status(self) -> str:
         if self.status_override:
@@ -114,3 +115,16 @@ class EventRegistration(Base):
     __table_args__ = (
         UniqueConstraint("event_id", "user_id", name="uq_event_user_registration"),
     )
+
+class Announcement(Base):
+    __tablename__ = "announcements"
+
+    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    event_id = Column(String(36), ForeignKey("events.id", ondelete="CASCADE"), nullable=False, index=True)
+    title = Column(String(255), nullable=False)
+    content = Column(Text, nullable=False)
+    is_pinned = Column(Boolean, default=False, nullable=False)
+    created_by_id = Column(String(36), ForeignKey("users.id"), nullable=False)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
+
+    event = relationship("Event", back_populates="announcements")

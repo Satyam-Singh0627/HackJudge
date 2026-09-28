@@ -102,6 +102,24 @@ class ApiClient {
     });
   }
 
+  async updateEventDetails(id: string, eventData: Partial<Event>): Promise<Event> {
+    return this.request<Event>(`/events/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(eventData),
+    });
+  }
+
+  async createAnnouncement(eventId: string, data: { title: string; content: string; is_pinned: boolean }): Promise<any> {
+    return this.request(`/events/${eventId}/announcements`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async getAnnouncements(eventId: string): Promise<any[]> {
+    return this.request<any[]>(`/events/${eventId}/announcements`);
+  }
+
   async registerForEvent(eventId: string): Promise<any> {
     return this.request(`/events/${eventId}/register`, { method: 'POST' });
   }

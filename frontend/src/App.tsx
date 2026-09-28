@@ -44,6 +44,7 @@ import { JudgeProfilePage } from './pages/judge/JudgeProfilePage';
 // Organizer Pages
 import { OrganizerDashboardPage } from './pages/organizer/OrganizerDashboardPage';
 import { OrganizerEventsPage } from './pages/organizer/OrganizerEventsPage';
+import { OrganizerAnnouncementsPage } from './pages/organizer/OrganizerAnnouncementsPage';
 import { OrganizerParticipantsPage } from './pages/organizer/OrganizerParticipantsPage';
 import { OrganizerTeamsPage } from './pages/organizer/OrganizerTeamsPage';
 import { OrganizerProjectsPage } from './pages/organizer/OrganizerProjectsPage';
@@ -57,6 +58,9 @@ import { OrganizerExportsPage } from './pages/organizer/OrganizerExportsPage';
 import { OrganizerCertificatesPage } from './pages/organizer/OrganizerCertificatesPage';
 import { OrganizerAuditPage } from './pages/organizer/OrganizerAuditPage';
 import { OrganizerSettingsPage } from './pages/organizer/OrganizerSettingsPage';
+
+// Participant Announcement Import
+import { ParticipantAnnouncementsPage } from './pages/participant/ParticipantAnnouncementsPage';
 
 // Admin Pages
 import { AdminDashboardPage } from './pages/admin/AdminDashboardPage';
@@ -184,6 +188,7 @@ export const App: React.FC = () => {
           <Route index element={<Navigate to="/participant/dashboard" replace />} />
           <Route path="dashboard" element={<ParticipantDashboardPage currentUser={currentUser!} onNotification={showNotification} />} />
           <Route path="events" element={<ParticipantEventsPage />} />
+          <Route path="announcements" element={<ParticipantAnnouncementsPage selectedEvent={selectedEvent!} onNotification={showNotification} />} />
           <Route path="team" element={<ParticipantTeamPage currentUser={currentUser!} onNotification={showNotification} />} />
           <Route path="project" element={<ParticipantProjectPage currentUser={currentUser!} onNotification={showNotification} />} />
           <Route path="submissions" element={<ParticipantSubmissionsPage currentUser={currentUser!} />} />
@@ -234,6 +239,7 @@ export const App: React.FC = () => {
           <Route index element={<Navigate to="/organizer/dashboard" replace />} />
           <Route path="dashboard" element={<OrganizerDashboardPage currentUser={currentUser!} onNotification={showNotification} />} />
           <Route path="events" element={<OrganizerEventsPage onNotification={showNotification} />} />
+          <Route path="announcements" element={<OrganizerAnnouncementsPage onNotification={showNotification} selectedEvent={selectedEvent!} />} />
           <Route path="participants" element={<OrganizerParticipantsPage />} />
           <Route path="teams" element={<OrganizerTeamsPage onNotification={showNotification} />} />
           <Route path="projects" element={<OrganizerProjectsPage />} />

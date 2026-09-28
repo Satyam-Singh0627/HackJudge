@@ -157,7 +157,7 @@ export const VerifyCertificatePage: React.FC<VerifyCertificatePageProps> = ({ on
       {valid && certificate && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           {/* Printable HTML Certificate Card */}
-          <div className="card" style={{
+          <div className="card certificate-print-area" style={{
             padding: '48px 36px',
             border: '4px double #b45309',
             background: '#ffffff',

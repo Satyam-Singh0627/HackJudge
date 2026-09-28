@@ -11,8 +11,9 @@ export const OrganizerEventsPage: React.FC<OrganizerEventsPageProps> = ({ onNoti
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
   const [isCreating, setIsCreating] = useState(false);
+  const [editingEventId, setEditingEventId] = useState<string | null>(null);
 
-  // New Event Form State
+  // New/Edit Event Form State
   const [title, setTitle] = useState('');
   const [slug, setSlug] = useState('');
   const [description, setDescription] = useState('');
@@ -44,7 +45,32 @@ export const OrganizerEventsPage: React.FC<OrganizerEventsPageProps> = ({ onNoti
     }
   };
 
-  const handleCreate = async (e: React.FormEvent) => {
+  const startEdit = (ev: Event) => {
+    setTitle(ev.title);
+    setSlug(ev.slug);
+    setDescription(ev.description);
+    setRegStart(new Date(ev.reg_start_date).toISOString().slice(0, 16));
+    setRegEnd(new Date(ev.reg_end_date).toISOString().slice(0, 16));
+    setSubStart(new Date(ev.submission_start_date).toISOString().slice(0, 16));
+    setSubEnd(new Date(ev.submission_end_date).toISOString().slice(0, 16));
+    setJudgeStart(new Date(ev.judging_start_date).toISOString().slice(0, 16));
+    setJudgeEnd(new Date(ev.judging_end_date).toISOString().slice(0, 16));
+    setResultsDate(new Date(ev.results_date).toISOString().slice(0, 16));
+    setMinTeamSize(ev.min_team_size);
+    setMaxTeamSize(ev.max_team_size);
+    setVotingEnabled(ev.voting_enabled);
+    setEditingEventId(ev.id);
+  };
+
+  const cancelEdit = () => {
+    setEditingEventId(null);
+    setIsCreating(false);
+    setTitle('');
+    setSlug('');
+    setDescription('');
+  };
+
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title || !slug) {
       onNotification('Event title and slug are required.', 'error');
@@ -70,16 +96,19 @@ export const OrganizerEventsPage: React.FC<OrganizerEventsPageProps> = ({ onNoti
         voting_enabled: votingEnabled
       };
 
-      const created = await api.createEvent(payload);
-      setEvents(prev => [created, ...prev]);
-      setIsCreating(false);
-      // Reset form
-      setTitle('');
-      setSlug('');
-      setDescription('');
-      onNotification(`Event "${created.title}" successfully created!`, 'success');
+      if (editingEventId) {
+        const updated = await api.updateEventDetails(editingEventId, payload);
+        setEvents(prev => prev.map(ev => ev.id === editingEventId ? updated : ev));
+        cancelEdit();
+        onNotification(`Event "${updated.title}" successfully updated!`, 'success');
+      } else {
+        const created = await api.createEvent(payload);
+        setEvents(prev => [created, ...prev]);
+        cancelEdit();
+        onNotification(`Event "${created.title}" successfully created!`, 'success');
+      }
     } catch (err: any) {
-      onNotification(err.message || 'Failed to create event', 'error');
+      onNotification(err.message || 'Failed to save event', 'error');
     } finally {
       setSubmitting(false);
     }
@@ -94,18 +123,24 @@ export const OrganizerEventsPage: React.FC<OrganizerEventsPageProps> = ({ onNoti
         </div>
 
         <button
-          onClick={() => setIsCreating(!isCreating)}
+          onClick={() => {
+            if (isCreating) {
+              cancelEdit();
+            } else {
+              setIsCreating(true);
+            }
+          }}
           className="btn btn-primary"
         >
           <Plus size={15} /> {isCreating ? 'Cancel' : 'Create New Event'}
         </button>
       </div>
 
-      {/* Creation Modal / Inline Form */}
-      {isCreating && (
+      {/* Creation/Edit Modal / Inline Form */}
+      {(isCreating || editingEventId) && (
         <div className="card" style={{ padding: '28px', marginBottom: '28px' }}>
-          <h3 style={{ fontSize: '18px', fontWeight: 800, marginBottom: '20px' }}>Create New Hackathon Event</h3>
-          <form onSubmit={handleCreate}>
+          <h3 style={{ fontSize: '18px', fontWeight: 800, marginBottom: '20px' }}>{editingEventId ? 'Edit Event Details' : 'Create New Hackathon Event'}</h3>
+          <form onSubmit={handleSave}>
             <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '16px' }}>
               <div className="form-group">
                 <label className="form-label" htmlFor="evTitle">Event Title</label>
@@ -179,9 +214,9 @@ export const OrganizerEventsPage: React.FC<OrganizerEventsPageProps> = ({ onNoti
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '20px', borderTop: '1px solid var(--border-color)', paddingTop: '16px' }}>
-              <button type="button" onClick={() => setIsCreating(false)} className="btn btn-secondary">Cancel</button>
+              <button type="button" onClick={cancelEdit} className="btn btn-secondary">Cancel</button>
               <button type="submit" className="btn btn-primary" disabled={submitting}>
-                <Save size={15} /> {submitting ? 'Creating Event...' : 'Save & Publish Event'}
+                <Save size={15} /> {submitting ? 'Saving...' : 'Save Detailed Settings'}
               </button>
             </div>
           </form>
@@ -216,6 +251,9 @@ export const OrganizerEventsPage: React.FC<OrganizerEventsPageProps> = ({ onNoti
                 </div>
 
                 <div style={{ display: 'flex', gap: '8px' }}>
+                  <button onClick={() => startEdit(ev)} className="btn btn-secondary" style={{ fontSize: '12px' }}>
+                    Edit Details
+                  </button>
                   <a href={`/events/${ev.id}`} className="btn btn-secondary" style={{ fontSize: '12px' }}>
                     Public Page
                   </a>

@@ -6,7 +6,7 @@ import {
   FileCheck2, Trophy, ShieldCheck, UserCheck, Scale,
   Sliders, Vote, Download, FileText, Settings, LogOut,
   ChevronRight, BarChart3, CheckCircle2, Clock, Globe,
-  Shield, Cpu, Layers, ExternalLink
+  Shield, Cpu, Layers, ExternalLink, Bell
 } from 'lucide-react';
 
 interface PortalLayoutProps {
@@ -38,6 +38,7 @@ export const PortalLayout: React.FC<PortalLayoutProps> = ({
             items: [
               { to: '/participant/dashboard', label: 'Dashboard', icon: <LayoutDashboard size={18} /> },
               { to: '/participant/events', label: 'My Events', icon: <Calendar size={18} /> },
+              { to: '/participant/announcements', label: 'Announcements', icon: <Bell size={18} /> },
               { to: '/participant/team', label: 'My Team', icon: <Users size={18} /> },
               { to: '/participant/project', label: 'My Project', icon: <FolderGit2 size={18} /> },
               { to: '/participant/submissions', label: 'Submissions', icon: <FileCheck2 size={18} /> },
@@ -67,6 +68,7 @@ export const PortalLayout: React.FC<PortalLayoutProps> = ({
             items: [
               { to: '/organizer/dashboard', label: 'Dashboard', icon: <LayoutDashboard size={18} /> },
               { to: '/organizer/events', label: 'Events', icon: <Calendar size={18} /> },
+              { to: '/organizer/announcements', label: 'Announcements', icon: <Bell size={18} /> },
               { to: '/organizer/participants', label: 'Participants', icon: <UserCheck size={18} /> },
               { to: '/organizer/teams', label: 'Teams', icon: <Users size={18} /> },
               { to: '/organizer/projects', label: 'Projects', icon: <FolderGit2 size={18} /> },
@@ -163,11 +165,10 @@ export const PortalLayout: React.FC<PortalLayoutProps> = ({
             <span style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
               Active Workspace
             </span>
-            <span className={`badge ${
-              role === 'ADMIN' ? 'badge-danger' :
-              role === 'ORGANIZER' ? 'badge-warning' :
-              role === 'JUDGE' ? 'badge-blue' : 'badge-success'
-            }`}>
+            <span className={`badge ${role === 'ADMIN' ? 'badge-danger' :
+                role === 'ORGANIZER' ? 'badge-warning' :
+                  role === 'JUDGE' ? 'badge-blue' : 'badge-success'
+              }`}>
               {role}
             </span>
           </div>
